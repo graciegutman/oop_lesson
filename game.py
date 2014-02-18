@@ -19,6 +19,9 @@ class Rock(GameElement):
     #some shit here!
     IMAGE = 'Rock'
 
+class Character(GameElement):
+    IMAGE = 'Horns'
+
 ####   End class definitions    ####
 
 def initialize():
@@ -39,5 +42,35 @@ def initialize():
         GAME_BOARD.set_el(pos[0], pos[1], rock)
         rocks.append(rock)
 
-    for rock in rocks:
-        print rock
+    global PLAYER
+    PLAYER = Character()
+    GAME_BOARD.register(PLAYER)
+    GAME_BOARD.set_el(2, 2, PLAYER)
+    print PLAYER
+
+    GAME_BOARD.draw_msg("Your message here for the low low price of one human child!")
+
+def keyboard_handler():
+    if KEYBOARD[key.UP]:
+        GAME_BOARD.draw_msg("You pressed up")
+        next_y = PLAYER.y - 1
+        GAME_BOARD.del_el(PLAYER.x, PLAYER.y)
+        GAME_BOARD.set_el(PLAYER.x, next_y, PLAYER)
+    elif KEYBOARD[key.DOWN]:
+        GAME_BOARD.draw_msg("You pressed down")
+        next_y = PLAYER.y + 1
+        GAME_BOARD.del_el(PLAYER.x, PLAYER.y)
+        GAME_BOARD.set_el(PLAYER.x, next_y, PLAYER)
+    elif KEYBOARD[key.RIGHT]:
+        GAME_BOARD.draw_msg("You pressed right")
+        next_x = PLAYER.x + 1
+        GAME_BOARD.del_el(PLAYER.x, PLAYER.y)
+        GAME_BOARD.set_el(next_x, PLAYER.y, PLAYER)
+    elif KEYBOARD[key.LEFT]:
+        GAME_BOARD.draw_msg("You pressed wrong. loljk left.")
+        next_x = PLAYER.x - 1
+        GAME_BOARD.del_el(PLAYER.x, PLAYER.y)
+        GAME_BOARD.set_el(next_x, PLAYER.y, PLAYER)
+    elif KEYBOARD[key.SPACE]:
+        GAME_BOARD.erase_msg()
+
