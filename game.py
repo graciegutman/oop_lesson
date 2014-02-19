@@ -24,7 +24,9 @@ class Character(GameElement):
         GameElement.__init__(self)
         self.inventory = []
 
-    IMAGE = 'Horns'
+    curr_position = 0 
+    IMG_list = ['Cat', 'Girl', 'Horns', 'Princess', 'Boy', 'Rock']
+    IMAGE = IMG_list[curr_position]
 
     def next_pos(self, direction):
         if direction == "up":
@@ -36,6 +38,13 @@ class Character(GameElement):
         elif direction == "right":
             return (self.x+1, self.y)
         return None
+
+    def change_char(self):
+        print "YAYE I speeleeed things wronnnng"
+        self.IMAGE = self.IMG_list[self.curr_position % len(self.IMG_list)]
+        GAME_BOARD.register(self)
+        self.curr_position += 1
+
 
 class Gem(GameElement):
     IMAGE = "BlueGem"
@@ -77,6 +86,10 @@ def initialize():
     GAME_BOARD.draw_msg("Your message here for the low low price of one human child!")
 
 def keyboard_handler():
+    if KEYBOARD[key.SPACE]:
+        print "Yay! TOAST~!"
+        PLAYER.change_char()
+
     direction = None
 
     if KEYBOARD[key.UP]:
