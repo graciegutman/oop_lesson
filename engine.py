@@ -4,8 +4,8 @@ import pyglet
 from pyglet.window import key
 from core import GameElement
 
-SCREEN_X = 800
-SCREEN_Y = 700
+SCREEN_X = 1000
+SCREEN_Y = 1000
 
 game_window = pyglet.window.Window(SCREEN_X, SCREEN_Y)
 
@@ -71,12 +71,12 @@ class Board(object):
         game_map = []
         inner_width = width-2
         for i in range(height):
-            if i == 0 or i == height-1:
+            #if i == 0 or i == height-1:
                 # On the boundaries
-                game_map.append(["Block"] * width)
-            else:
-                row = ["Block"] + (["GrassBlock"] * inner_width) + ["Block"]
-                game_map.append(row)
+            game_map.append(["Block"] * width)
+            #else:
+                #row = ["Block"] + (["GrassBlock"] * inner_width) + ["Block"]
+                #game_map.append(row)
         
         self.base_board = game_map
         self.content_layer = []
@@ -173,6 +173,9 @@ class Obstacle(GameElement):
 def update(dt):
     for el in update_list:
         el.update(dt)
+        if game.egg.WON_LEVEL == True:
+            print True
+            game.initialize(game.LEVEL)
 
 draw_list = []
 update_list = []
@@ -231,7 +234,7 @@ def run():
         
     # Set up the update clock
     pyglet.clock.schedule_interval(update, 1/10.)
-    game.initialize()
+    game.initialize(game.LEVEL)
     pyglet.app.run()
 
 class UpdateWrapper(object):
